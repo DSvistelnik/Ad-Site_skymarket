@@ -34,18 +34,21 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-# TODO здесь тоже нужно подключить Swagger и corsheaders
+# TODO здесь тоже нужно подключить Swagger и corsheaders/Сделано
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "rest_framework",
-    "users",
-    "ads",
-    "redoc",
+     "django.contrib.admin",
+     "django.contrib.auth",
+     "django.contrib.contenttypes",
+     "django.contrib.sessions",
+     "django.contrib.messages",
+     "django.contrib.staticfiles",
+     "rest_framework",
+     "users",
+     "ads",
+     "redoc",
+     "djoser",
+     "corsheaders",
+     "drf_spectacular",
 ]
 
 
@@ -90,8 +93,16 @@ DJOSER = {
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# TODO здесь необходимо настроить подключение к БД
+# TODO здесь необходимо настроить подключение к БД/Сделано
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'skymarket',
+        'USER': 'skymarket',
+        'PASSWORD': 'skymarket',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
@@ -153,3 +164,10 @@ EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = os.environ.get("EMAIL_PORT")
+
+#SPECTACULAR_SETTINGS = {
+    #"TITLE": "CourseWork 6",
+    #"DESCRIPTION": "CourseWork 6 API",
+#}
+
+#AUTH_USER_MODEL = "users.User"
