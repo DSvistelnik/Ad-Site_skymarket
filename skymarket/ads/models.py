@@ -10,9 +10,22 @@ class Ad(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to="ad_image/", null=True, blank=False)
 
+    class Meta:
+        verbose_name = "Объявление"
+        verbose_name_plural = "Объявления"
+
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     text = models.TextField()
     author = models.ForeignKey("users.User", on_delete=models.CASCADE)
     ad = models.ForeignKey("ads.Ad", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Коментарий"
+        verbose_name_plural = "Коментарии"
+
+    def __str__(self):
+        return self.text
