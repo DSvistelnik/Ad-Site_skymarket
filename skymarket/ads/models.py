@@ -14,8 +14,6 @@ class Ad(models.Model):
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 
-    def __str__(self):
-        return self.title
 
 class Comment(models.Model):
     text = models.TextField()
@@ -27,5 +25,3 @@ class Comment(models.Model):
         verbose_name = "Коментарий"
         verbose_name_plural = "Коментарии"
 
-    def __str__(self):
-        return self.text

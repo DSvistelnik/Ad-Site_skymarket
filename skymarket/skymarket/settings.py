@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -36,19 +36,21 @@ ALLOWED_HOSTS = ["*"]
 
 # TODO здесь тоже нужно подключить Swagger и corsheaders/Сделано
 INSTALLED_APPS = [
-     "django.contrib.admin",
-     "django.contrib.auth",
-     "django.contrib.contenttypes",
-     "django.contrib.sessions",
-     "django.contrib.messages",
-     "django.contrib.staticfiles",
-     "rest_framework",
-     "users",
-     "ads",
-     "redoc",
-     "djoser",
-     "corsheaders",
-     "drf_spectacular",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "djoser",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "users",
+    "ads",
+    "redoc",
+    "drf_spectacular",
+    "corsheaders",
+    "rest_framework_simplejwt",
+    "django_filters",
 ]
 
 
@@ -85,9 +87,20 @@ WSGI_APPLICATION = "skymarket.wsgi.application"
 
 # TODO здесь мы настраиваем аутентификацию и пагинацию
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
 }
 # TODO здесь мы настраиваем Djoser
 DJOSER = {
+    "SERIALIZERS": {
+        "user_create": "users.serializers.UserRegistrationSerializer"
+    },
+    "LOGIN_FIELD": "email"
 }
 
 # Database
@@ -165,9 +178,8 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = os.environ.get("EMAIL_PORT")
 
-#SPECTACULAR_SETTINGS = {
-    #"TITLE": "CourseWork 6",
-    #"DESCRIPTION": "CourseWork 6 API",
-#}
 
-#AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.User"
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=500),
+}

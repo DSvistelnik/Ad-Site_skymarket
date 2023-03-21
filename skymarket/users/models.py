@@ -1,24 +1,18 @@
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.db import models
-
+from .managers import UserManager, UserRoles
 from phonenumber_field.modelfields import PhoneNumberField
-from django.utils.translation import gettext_lazy as _
-
-from .managers import UserManager
 
 
 class User(AbstractBaseUser):
-    class UserRoles(models.TextChoices):
-        ADMIN = "admin", "Administrator"
-        USER = "user", "User"
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = PhoneNumberField()
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField(default=True)
     role = models.CharField(max_length=5, choices=UserRoles.choices, default=UserRoles.USER)
-    image = models.ImageField(upload_to="user_avatar/", null=True, blank=False)
+    image = models.ImageField(upload_to="user_logo/")
+    is_active = models.BooleanField(default=True)
 
     @property
     def is_superuser(self):
@@ -34,15 +28,15 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return self.is_admin
 
-    objects = UserManager()
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "phone", "role"]
 
+    objects = UserManager()
+
     @property
     def is_admin(self):
-        return self.role == self.UserRoles.ADMIN
+        return self.role == UserRoles.ADMIN
 
     @property
     def is_user(self):
-        return self.role == self.UserRoles.USER
+        return self.role == UserRoles.USER
