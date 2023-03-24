@@ -2,7 +2,7 @@
 
 from rest_framework import permissions
 
-from skymarket.users.managers import UserRoles
+from users.managers import UserRoles
 
 
 class IsOwner(permissions.BasePermission):
