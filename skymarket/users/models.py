@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.db import models
-from .managers import UserManager, UserRoles
+from users.managers import UserManager, UserRoles
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -17,6 +17,7 @@ class User(AbstractBaseUser):
     @property
     def is_superuser(self):
         return self.is_admin
+
 
     @property
     def is_staff(self):
